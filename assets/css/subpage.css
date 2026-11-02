@@ -1,0 +1,113 @@
+/* Sub-pages (Locations, Marine life) — slideshow hero, content sections */
+
+.lm { min-height: 100vh; }
+.lm-gut { padding-left: var(--am-gutter); padding-right: var(--am-gutter); }
+
+/* hero */
+.lm-hero {
+  position: relative; min-height: 760px; display: flex; align-items: flex-end; overflow: hidden;
+  padding-top: 132px; padding-bottom: clamp(48px, 9vh, 96px);
+}
+.lm-slides { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+.lm-slide {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; z-index: 0; transform: scale(1.21); transition: none;
+  filter: saturate(1.04) contrast(1.04);
+}
+.lm-slide.on { opacity: 1; z-index: 2; transform: scale(1); transition: opacity 1.6s ease, transform 9s linear; }
+.lm-slide.out { opacity: 1; z-index: 1; transform: scale(1); transition: transform 2.5s linear; }
+.lm-hero .am-scrim {
+  position: absolute; inset: 0 0 -2px; z-index: 1; pointer-events: none;
+  /* bottom fade sits on top and uses only the page blue, eased, so the hero melts into the page with no edge */
+  background:
+    linear-gradient(0deg, rgba(6, 22, 43, 1) 0%, rgba(6, 22, 43, 0.96) 4%, rgba(6, 22, 43, 0.84) 10%, rgba(6, 22, 43, 0.6) 19%,
+      rgba(6, 22, 43, 0.34) 30%, rgba(6, 22, 43, 0.14) 42%, rgba(6, 22, 43, 0.04) 52%, rgba(6, 22, 43, 0) 60%),
+    linear-gradient(90deg, rgba(var(--am-deep), 0.72) 0%, rgba(var(--am-deep), 0.35) 42%, rgba(var(--am-deep), 0) 70%),
+    linear-gradient(180deg, rgba(var(--am-deep), 0.45) 0%, rgba(var(--am-deep), 0) 22%);
+}
+.lm-hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 4px; z-index: 2; background: var(--am-navy); pointer-events: none; }
+.lm-hero .am-panel { position: relative; z-index: 3; text-shadow: 0 2px 30px rgba(2, 10, 22, 0.55); }
+.lm-hero .am-sub { max-width: 775px; }
+
+/* sections */
+.lm-sec { padding-top: 128px; padding-bottom: 32px; }
+.lm-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-items: start; margin-bottom: 56px; }
+.lm-head .am-panel, .lm-spots > .am-panel { max-width: 80%; }
+.lm-head .am-lead, .lm-head .am-sub { max-width: none; }
+
+/* locations */
+.lm-loc {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.241fr);
+  gap: clamp(24px, 4vw, 64px); align-items: center; margin-top: clamp(56px, 10vw, 144px);
+}
+.lm-loc img { display: block; width: 100%; height: auto; }
+.lm-map-country, .lm-map { min-width: 0; }
+
+.lm-spots { margin-top: clamp(96px, 10vw, 160px); }
+.lm-spots > .am-panel { margin-bottom: clamp(32px, 4vw, 48px); }
+.lm-spot {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: clamp(24px, 4vw, 64px);
+  padding: clamp(24px, 2.4vw, 32px) 0; border-top: 1px solid var(--am-line);
+}
+.lm-spot:last-child { border-bottom: 1px solid var(--am-line); }
+.lm-spot img { display: block; width: 100%; aspect-ratio: 2 / 1; object-fit: cover; border-radius: var(--am-radius); }
+.lm-spot .tx { display: flex; flex-direction: column; gap: 14px; }
+.lm-spot h3 { margin: 0 0 20px; font-weight: 500; font-size: clamp(28px, 2.6vw, 38px); line-height: 1.05; letter-spacing: -0.035em; }
+.lm-spot dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 24px; font-size: 15px; line-height: 1.5; }
+.lm-spot dt { padding-top: 2px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--am-teal); }
+.lm-spot dd { margin: 0; color: var(--am-white); }
+.lm-spot p { margin: 0; font-size: 17px; line-height: 1.4; color: var(--am-text-2); }
+
+/* marine life */
+.lm-note { display: flex; flex-direction: column; gap: 12px; margin-top: clamp(40px, 5vw, 72px); }
+.lm-note .am-sub { max-width: none; }
+.lm-note .am-lead { max-width: 620px; }
+.lm-list {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: auto;
+  column-gap: clamp(24px, 3vw, 48px); row-gap: 0; align-items: start; margin-top: clamp(56px, 10vw, 144px);
+}
+.lm-sp {
+  display: grid; grid-template-columns: minmax(0, 1fr); grid-row: span 2; grid-template-rows: subgrid;
+  row-gap: 24px; align-items: start; padding-bottom: clamp(80px, 9vw, 140px);
+}
+.lm-sp .art { align-self: end; display: flex; align-items: center; justify-content: center; width: 100%; min-width: 0; }
+.lm-sp .art.tall { aspect-ratio: 1 / 1; }
+.lm-sp .art.tall img { width: auto; height: 100%; max-width: 100%; }
+.lm-sp .art img { display: block; width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 24px 48px rgba(2, 8, 18, 0.55)); }
+.lm-sp .tx { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.lm-sp .g { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--am-teal); }
+.lm-sp h3 { margin: 0; font-weight: 500; font-size: clamp(22px, 2vw, 30px); line-height: 1.08; letter-spacing: -0.03em; }
+.lm-sp .lt { font-size: 15px; font-style: italic; color: var(--am-text-3); }
+.lm-sp p { margin: 0; font-size: 15px; line-height: 1.4; color: var(--am-text-2); }
+.lm-sp p.tip { padding-top: 10px; border-top: 1px solid var(--am-line); font-size: 13px; color: var(--am-text-3); }
+.lm-warn {
+  display: flex; flex-direction: column; gap: 2px; padding-top: 10px; border-top: 1px solid var(--am-line);
+  font-size: 13px; line-height: 1.55; color: var(--am-text-3);
+}
+.lm-warn .wl { color: var(--am-white); font-weight: 500; }
+
+/* closing contact */
+.lm-contact { padding-bottom: 0; }
+.lm-contact .am-panel { max-width: none; width: 100%; }
+.lm-contact .am-h2 { max-width: 14ch; }
+
+@media (max-width: 1100px) {
+  .lm-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lm-sp { padding-bottom: calc(clamp(80px, 9vw, 140px) + 40px); }
+}
+@media (max-width: 880px) {
+  .lm-hero { min-height: 640px; padding-bottom: 96px; }
+  .lm-head .am-panel, .lm-spots > .am-panel { max-width: none; }
+  .lm-loc, .lm-spot, .lm-list { grid-template-columns: minmax(0, 1fr); }
+  .lm-spot { padding-bottom: 60px; }
+  .lm-map-country { max-width: 240px; }
+  .lm-sp .art img { max-height: 420px; width: auto; max-width: 100%; }
+  /* one column: tall cut-outs (seahorse, seagrass, algae) hug their image instead of a full-width square */
+  .lm-sp .art.tall { aspect-ratio: auto; }
+  .lm-sp .art.tall img { height: auto; }
+  .lm-sec { padding-top: 96px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lm-slide, .lm-slide.on, .lm-slide.out { transform: none; }
+  .lm-slide.on { transition: opacity .4s linear; }
+}

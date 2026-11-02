@@ -1,0 +1,82 @@
+/* Home — scroll-driven dive: fixed footage behind full-height chapters */
+
+.am-media { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: var(--am-navy); }
+.am-poster, .am-video {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover;
+  transform: scale(1.04); transform-origin: 50% 50%; will-change: transform;
+  filter: saturate(1.08) contrast(1.06);
+}
+.am-video { opacity: 0; transition: opacity .8s ease; }
+.am-video.ready { opacity: 1; }
+.am-scrim { position: absolute; inset: 0; pointer-events: none; background: var(--am-scrim); }
+.am-grain { position: fixed; inset: 0; z-index: 1; pointer-events: none; box-shadow: inset 0 0 180px rgba(2, 8, 18, 0.55); }
+
+.am-load {
+  position: fixed; left: 50%; bottom: 28px; z-index: 4; transform: translateX(-50%);
+  padding: 10px 16px; border-radius: var(--am-radius); background: rgba(6, 22, 43, 0.6);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--am-text-2);
+}
+.am-load[hidden] { display: none; }
+
+main { position: relative; z-index: 2; }
+.am-sec {
+  position: relative; min-height: 100vh; padding: 132px var(--am-gutter) clamp(40px, 9vh, 96px);
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+.am-sec.right { align-items: flex-end; }
+.am-sec .am-panel { text-shadow: 0 2px 30px rgba(2, 10, 22, 0.55); }
+/* two lines, as on the boards: sized in em so it always fits "central Adriatic" but never both lines, at every font size */
+.am-hero .am-h1 { width: 6.3em; max-width: none; letter-spacing: -0.035em; }
+.am-stat { font-family: var(--am-font-display); font-size: clamp(84px, 12vw, 180px); font-weight: 900; line-height: 0.85; letter-spacing: -0.06em; }
+.am-contact-panel { max-width: none; width: 100%; }
+.am-contact-panel .am-h2 { max-width: 14ch; }
+
+/* reveal on chapter enter */
+.am-reveal { opacity: 0; transform: translateY(32px); transition: opacity 1s ease, transform 1.1s cubic-bezier(.16, .8, .24, 1); }
+.am-sec.on .am-reveal { opacity: 1; transform: none; }
+.am-sec.on .d1 { transition-delay: .08s; }
+.am-sec.on .d2 { transition-delay: .18s; }
+.am-sec.on .d3 { transition-delay: .28s; }
+
+/* chapter rail */
+.am-hud {
+  position: fixed; right: clamp(16px, 2.4vw, 36px); top: 50%; z-index: 6; transform: translateY(-50%);
+  display: flex; flex-direction: column; align-items: flex-end; gap: 2px;
+}
+.am-dot {
+  display: flex; align-items: center; justify-content: flex-end; gap: 12px; min-height: 40px; min-width: 44px; padding: 0 4px;
+  background: none; border: 0; cursor: pointer; color: var(--am-text-4);
+  font-family: inherit; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.am-dot .lbl { opacity: 0; transform: translateX(6px); transition: opacity .3s ease, transform .3s ease; }
+.am-dot .bar { display: block; width: 14px; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, 0.4); transition: width .4s ease, background .4s ease; }
+.am-dot:hover .lbl, .am-dot.on .lbl { opacity: 1; transform: none; }
+.am-dot.on { color: var(--am-white); }
+.am-dot.on .bar { width: 36px; background: var(--am-teal); }
+.am-dot:focus-visible { outline: 3px solid var(--am-white); outline-offset: 2px; border-radius: 4px; }
+
+@media (max-width: 880px) {
+  .am-hud { display: none; }
+  .am-sec { padding-bottom: 96px; }
+  .am-sec.right { align-items: flex-start; }
+  /* copy sits on the footage like the hero, no glass boxes; a stronger bottom-weighted scrim keeps it readable */
+  .am-sec .am-panel { gap: 18px; }
+  .am-scrim { background: linear-gradient(0deg, rgba(var(--am-deep), 0.9) 0%, rgba(var(--am-deep), 0.66) 38%, rgba(var(--am-deep), 0.2) 68%, rgba(var(--am-deep), 0.45) 100%); }
+  #am-contact { background: linear-gradient(180deg, rgba(6, 22, 43, 0) 0%, rgba(6, 22, 43, 0.72) 22%, rgba(6, 22, 43, 0.9) 100%); }
+
+  /* mobile type scale */
+  .am-sec .am-kicker { font-size: 12px; letter-spacing: 0.12em; line-height: 1.5; }
+  .am-hero .am-h1 { font-size: clamp(40px, 11.6vw, 52px); max-width: 100%; }
+  .am-sec .am-h2 { font-size: clamp(32px, 9vw, 40px); }
+  .am-stat { font-size: clamp(72px, 22vw, 96px); }
+  .am-sec .am-sub { font-size: clamp(20px, 5.6vw, 23px); max-width: 100%; }
+  .am-sec .am-h1 + .am-sub, .am-sec .am-h2 + .am-sub { margin-top: -8px; }
+  .am-sec .am-lead { font-size: 16px; max-width: 100%; }
+  .am-sec .am-ctas { gap: 10px; }
+  .am-sec .am-ctas .am-btn { min-height: 48px; padding: 0 22px; font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .am-reveal { opacity: 1; transform: none; transition: none; }
+  .am-dot .bar, .am-dot .lbl { transition: none; }
+}
